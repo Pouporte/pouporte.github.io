@@ -2,4 +2,20 @@ import math
 import matplotlib as mp
 import numpy as np
 
+g = 9.80665      # gravitation [m/s**2]
 
+### Paramètres du système
+
+m = 0.1          # masse du bloc [kg]
+b = 0.03         # coefficient de frottement [N*s/m]
+l = 0.15         # longueur du cable [m]
+theta = ..       # angle [degrée]
+
+### Paramètres de la simulation
+
+step = 0.0001     # pas (dt) [s]	
+end = 30.0       # durée [s]
+x_0 = -5.0       # position initiale [m]
+v_0 = 0.0        # vitesse initiale [m/s]
+
+t = np.arange(0, end, step)
