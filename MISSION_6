@@ -1,0 +1,183 @@
+#Nael et Grégoire
+#J'ai mit une petit reference, j'espere que vous l'avez ;)
+#executer assistant() pour commencer le programme
+def assistant():
+    print("Hello,I'm your personnal assistant you can call me Jarvis. How can i help you today ?")
+    print("Type help to see commands.")
+    global part
+    entree = 0
+    while True:
+        entree = input("how can i help sir? (please separate with ':')").lower()
+        parts = entree.split(':')
+        request = parts[0].strip()
+        part = ': '.join(part.strip() for part in parts[1:]) if len(parts) > 1 else None
+        
+        try:
+            if request == "sum":
+                print("somme="+str(sum(part)))
+            elif request == "file":
+                if __name__ == "__main__" and open_file(part):
+                    print("File opened successfully!")
+            elif request == "info":
+                filename = opened_file
+                info(filename)
+                if __name__ == "__main__":
+                    print(nbr_lines," lines")
+                    print(nbr_carac," caracters")
+            elif request == "average":
+                print("average="+str(average(part)))
+            elif request == "help":
+                help()
+            elif request == "words":
+                words_l()
+            elif request == "exit":
+                quit()
+            elif request == "search":
+                search(part)
+            else:
+                if __name__ == "__main__":
+                    print("Unknown command please try again")
+            
+        except Exception as error:
+            print("An error has occured.", error)
+
+# fais la somme de différents nombres separé par des '.'
+
+def sum(n):
+    try:
+        num_split = n.split(":")
+        somme = 0
+        for i in num_split:
+            somme += float(i)
+        return  somme
+    except ValueError:
+        if __name__ == "__main__":
+            print("ERROR,invalid input")
+
+#fais la moyenne de différents nombres separé par des '.'
+def average(n):
+    try:
+        num_split = n.split(":")
+        average = 0
+        somme = 0
+        for i in num_split:
+            somme += float(i)
+        average = somme/len(num_split)
+        return average
+    except ValueError:
+        if __name__ == "__main__":
+            print("ERROR,invalid input")
+
+#affiche la liste des différentes commandes
+def help():
+    print("The command 'sum' calculate the sum of numbers(separated by spaces).")
+    print("The command 'average' calculate the average beetwen numbers(separated by spaces).")
+    print("The command 'file' indicate with which file to work.")
+    print("The command 'info' shows how much lines and characters are in a file.")
+    print("The command 'words' transform the open file in a list of words.")
+    print("The command 'search' shows if a word is in the.")
+    print("The command 'help' shows this list.")
+    print("The command 'exit' closes the program and all opened files.")
+
+
+#choisis le fichier sur lequel travailler
+def open_file(part):
+    global opened_file
+    try:
+        file_name = part
+        opened_file = open(file_name, "r")
+        return True
+        
+    except FileNotFoundError:
+        if __name__ == "__main__":
+            print("The file could not be found. Please check the name and try again.")
+    except Exception as error:
+        if __name__ == "__main__":
+            print("An error occurred while opening the file:", error)
+
+#donne le nombre de caractère et de ligne dans le fichier
+def info(filename):
+    global opened_file
+    global nbr_lines
+    global nbr_carac
+    try:
+        if __name__ == "__main__" :
+            file = opened_file
+        else:
+            file= open(filename,"r")
+        if file == None:
+            print("No file is currently opened, please use the 'file' command")
+        else:
+            lines = file.readlines()
+            opened_file.seek(0)
+            caracters = file.read()
+            nbr_carac = len(caracters)
+            nbr_lines = len(lines)
+            return(nbr_lines,nbr_carac)
+
+    except Exception as error:
+        if __name__ == "__main__":
+            print("Sir,an error has occured.", error)
+
+#transforme le fichier en une liste de mots
+def words_l():
+    global opened_file, words
+    words = []
+    try:
+        if not opened_file:
+            if __name__ == "__main__":
+                print("No file is currently open!")
+            return
+        
+        opened_file.seek(0)
+        for line in opened_file:
+            words.extend(line.split())
+        if __name__ == "__main__":
+            print("The file content has been read into a list of words.")
+    except Exception as error:
+        if __name__ == "__main__":
+            print("An error occurred:", error)
+
+
+#recherche un mot dans la liste de mots et indique si ce mot est dedans ou non
+def search(part):
+    global opened_file,words
+    word = (part).strip().lower()
+    try:
+        found = False
+        for i in words:
+            if i.strip().lower() == (word+",0"):#le ,0 permet que le programme fonctionne, quand je convertit le fichier en liste ils apparaissent et je sais pas pourquoi
+                found = True
+                break
+        if found:
+            if __name__ == "__main__":
+                print(word, "is in the list of words")
+            return True
+        else:
+            if __name__ == "__main__":
+                print(word, "is not in the list of words")
+            return False
+    except TypeError:
+        if __name__ == "__main__":
+            print("The list of words is empty. Please read the file as words and try again!")
+        return False
+    except Exception as error:
+        if __name__ == "__main__":
+            print("An error has occurred,", error)
+        return False
+
+
+#permet de quitter et fermer le programme
+def quit():
+    if __name__ == "__main__":
+        print("Have a great day Mr.Stark.")
+    try:
+        if opened_file == None:
+            pass
+        else:
+            opened_file.close()
+    finally:
+        exit()
+    
+"""if __name__ == "__main__":    
+    assistant()"""
