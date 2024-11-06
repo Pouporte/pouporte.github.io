@@ -2,14 +2,16 @@ import math
 import matplotlib as mp
 import numpy as np
 
+#constante
+
+l = 0.15         # longueur du cable [m]
 g = 9.80665      # gravitation [m/s**2]
 
 ### Paramètres du système
 
-m = 0.1          # masse du bloc [kg]
+m = 0.1          # masse du pendule [kg]
 b = 0.03         # coefficient de frottement [N*s/m]
-l = 0.15         # longueur du cable [m]
-theta = ..       # angle [degrée]
+theta =...       # angle [rad]
 
 ### Paramètres de la simulation
 
