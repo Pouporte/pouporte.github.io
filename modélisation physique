@@ -77,7 +77,10 @@ def afficher_graphiques_energie():
     plt.tight_layout()
     plt.show()
 
+def afficher_tout_les_graph():
+    afficher_graphiques()
+    afficher_graphiques_energie()
+
 # Exécution de la simulation avec frottement
 simulation()
-afficher_graphiques()
-afficher_graphiques_energie()
+afficher_tout_les_graph()
