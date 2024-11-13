@@ -10,7 +10,7 @@ b = 0.001        # coefficient de frottement [kg*m^2/s]
 
 # Paramètres de la simulation
 step = 0.001                # pas de temps [s]
-end = 20.0                  # durée de la simulation [s]
+end = 10.0                  # durée de la simulation [s]
 theta_0 = math.pi / 6       # position angulaire initiale [rad]
 theta_dot_0 = 0             # vitesse angulaire initiale [rad/s]
 
@@ -21,7 +21,6 @@ theta_dot = np.empty_like(t)
 theta_dot_dot = np.empty_like(t)
 
 def simulation():
-    """ Exécute la simulation avec le coefficient de frottement défini. """
     theta[0] = theta_0
     theta_dot[0] = theta_dot_0
     
@@ -38,48 +37,47 @@ def simulation():
     theta_dot_dot[-1] = theta_dot_dot[-2]  # Correction pour l'index final
 
 def get_kinetic_energy(i):
-    """ Calcule l'énergie cinétique du pendule à l'itération i. """
     speed = l * theta_dot[i]    # vitesse du pendule (scalaire)
     return 0.5 * m * speed**2   # énergie cinétique
 
 def calculer_energies():
-    """ Calcule les énergies potentielle, cinétique et totale pour chaque instant. """
     e_pot = m * g * l * (1 - np.cos(theta))   # énergie potentielle
     e_kin = np.array([get_kinetic_energy(i) for i in range(len(t))])  # énergie cinétique
     e_tot = e_pot + e_kin  # énergie totale
     return e_pot, e_kin, e_tot
 
-def afficher_graphiques():
-    """ Affiche les graphiques de position, vitesse, et accélération angulaire du pendule. """
+def afficher_graph():
     plt.figure(figsize=(5, 6))
     plt.subplot(3, 1, 1)
     plt.plot(t, theta, label="Position angulaire θ")
     plt.legend()
+    plt.title("x_pendule")
     plt.subplot(3, 1, 2)
     plt.plot(t, theta_dot, label="Vitesse angulaire ω")
     plt.legend()
+    plt.title("v_pendule")
     plt.subplot(3, 1, 3)
     plt.plot(t, theta_dot_dot, label="Accélération angulaire α")
     plt.legend()
+    plt.title("a_pendule")
     plt.tight_layout()
     plt.show()
 
-def afficher_graphiques_energie():
-    """ Affiche les graphiques d'énergie potentielle, cinétique et totale du pendule. """
+def afficher_graph_energie():
     e_pot, e_kin, e_tot = calculer_energies()
 
     plt.figure(figsize=(5, 6))
-    plt.plot(t, e_pot, label="Énergie potentielle")
-    plt.plot(t, e_kin, label="Énergie cinétique")
-    plt.plot(t, e_tot, label="Énergie totale")
+    plt.plot(t, e_pot, label="E_potentielle")
+    plt.plot(t, e_kin, label="E_cinétique")
+    plt.plot(t, e_tot, label="E_totale")
     plt.legend()
-    plt.title("Énergies du pendule")
+    plt.title("E_pendule")
     plt.tight_layout()
     plt.show()
-
+    
 def afficher_tout_les_graph():
-    afficher_graphiques()
-    afficher_graphiques_energie()
+    afficher_graph()
+    afficher_graph_energie()
 
 # Exécution de la simulation avec frottement
 simulation()
