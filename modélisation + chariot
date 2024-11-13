@@ -39,10 +39,10 @@ def simulation():
         dt = step
         
         # Calcul de l'accélération angulaire du pendule
-        theta_dot_dot[i] = (g * np.sin(theta[i]) + np.cos(theta[i]) * (-F - m * l * theta_dot[i]**2 * np.sin(theta[i]))/(m_c + m))/(l * ((4/3) - (m * np.cos(theta[i])**2) / (m_c + m)))
+        theta_dot_dot[i] = ((-g/l)*theta[i]) - ((b/m*(l**2))*theta_dot[i])
         
         # Calcul de l'accélération en x du chariot       
-        x_dot_dot[i] = (F + m * l * (theta_dot[i]**2 * np.sin(theta[i]) - theta_dot_dot[i] * np.cos(theta[i]))) / (m_c + m)
+        x_dot_dot[i] = (F +( m * l * ((theta_dot[i]**2) * np.sin(theta[i])) - theta_dot_dot[i] * np.cos(theta[i]))) / (m_c + m)
 
         # Calcul de la vitesse angulaire du pendule adaptée au chariot
         theta_dot[i+1] = theta_dot[i] +(((-g)/l)*np.sin(theta[i])-(b/m*(l**2))*theta[i] + 1/l*x_dot_dot[i]*np.cos(theta[i]))*dt
